@@ -14,10 +14,10 @@ namespace RoosterLottery.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PlayerController : ControllerBase
+    public class BetController : ControllerBase
     {
-        IPlayerService _service;
-        public PlayerController(IPlayerService service) => _service = service;
+        IBetService _service;
+        public BetController(IBetService service) => _service = service;
 
         /// <summary>
         /// Load
@@ -63,25 +63,35 @@ namespace RoosterLottery.Controllers
         }
 
         /// <summary>
-        /// SearchPlayerByPhoneNumber
+        /// GetByPlayerId
         /// </summary>
-        /// <param name="phoneNumber"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        public Player SearchPlayerByPhoneNumber([FromQuery]string phoneNumber)
+        public IActionResult GetByPlayerId(int playerId)
         {
-            return _service.SearchPlayerByPhoneNumber(phoneNumber);
+            try
+            {
+                var players = _service.GetByPlayerId(playerId);
+                if (players == null)
+                    return NotFound();
+                return Ok(players);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
-        /// Save model
+        /// Save
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Save(Player model)
+        public IActionResult Save(Bet model)
         {
             try
             {

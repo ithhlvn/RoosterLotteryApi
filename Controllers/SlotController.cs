@@ -14,10 +14,10 @@ namespace RoosterLottery.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PlayerController : ControllerBase
+    public class SlotController : ControllerBase
     {
-        IPlayerService _service;
-        public PlayerController(IPlayerService service) => _service = service;
+        ISlotService _service;
+        public SlotController(ISlotService service) => _service = service;
 
         /// <summary>
         /// Load
@@ -63,25 +63,13 @@ namespace RoosterLottery.Controllers
         }
 
         /// <summary>
-        /// SearchPlayerByPhoneNumber
-        /// </summary>
-        /// <param name="phoneNumber"></param>
-        /// <returns></returns>
-        [AllowAnonymous]
-        [HttpGet]
-        public Player SearchPlayerByPhoneNumber([FromQuery]string phoneNumber)
-        {
-            return _service.SearchPlayerByPhoneNumber(phoneNumber);
-        }
-
-        /// <summary>
-        /// Save model
+        /// Save player
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Save(Player model)
+        public IActionResult Save(Slot model)
         {
             try
             {
@@ -95,7 +83,7 @@ namespace RoosterLottery.Controllers
         }
 
         /// <summary>
-        /// Delete  
+        /// Delete player  
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

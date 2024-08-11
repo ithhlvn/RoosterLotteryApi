@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace RoosterLottery.Models
 {
-    public class PlayerContext : DbContext
+    public class RoosterLotteryContext : DbContext
     {
-        public PlayerContext(DbContextOptions options) : base(options)
+        public RoosterLotteryContext(DbContextOptions options) : base(options)
         {
-
         }
+        DbSet<Slot> Slot { get; set; }
         DbSet<Player> Player { get; set; }
+        DbSet<Bet> Bet { get; set; }
     }
 }

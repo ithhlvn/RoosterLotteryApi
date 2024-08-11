@@ -2,42 +2,34 @@
 using RoosterLottery.Models;
 using RoosterLottery.ViewModels;
 using System.Collections.Generic;
-using Player = RoosterLottery.Models.Player;
+using Slot = RoosterLottery.Models.Slot;
 using System.Threading.Tasks;
 
 namespace RoosterLottery.Services
 {
-    public interface IPlayerService
+    public interface ISlotService
     {
         /// <summary>
-        /// Load all player
+        /// get list of all Slot
         /// </summary>
         /// <returns></returns>
-        List<Player> Load();
-
-        /// <summary>
-        /// GetById
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Player GetById(int id);
+        List<Slot> Load();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        Player SearchPlayerByPhoneNumber(string phoneNumber);
-        
+        Slot GetById(int id);
+
         /// <summary>
-        ///  add edit player
+        ///  add edit Slot
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        ResponseModel Save(Player model);
+        ResponseModel Save(Slot model);
 
         /// <summary>
-        /// delete player
+        /// delete Slot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
