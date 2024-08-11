@@ -27,13 +27,17 @@ namespace RoosterLottery
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            /* Cors Extension */
+            services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RoosterLotteryApi", Version = "v1" });
             });
 
 
-            services.AddDbContext<PlayerContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
+            services.AddDbContext<RoosterLotteryContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
             
             services.AddScoped<IPlayerService, PlayerService>();
         }

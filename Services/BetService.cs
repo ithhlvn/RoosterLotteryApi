@@ -5,26 +5,26 @@ using System.Linq;
 using RoosterLottery.ViewModels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Player = RoosterLottery.Models.Player;
+using Bet = RoosterLottery.Models.Bet;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace RoosterLottery.Services
 {
-    public class PlayerService : IPlayerService
+    public class BetService : IBetService
     {
         private RoosterLotteryContext _context;
-        public PlayerService(RoosterLotteryContext context) => _context = context;
+        public BetService(RoosterLotteryContext context) => _context = context;
 
         /// <summary>
         /// Load
         /// </summary>
         /// <returns></returns>
-        public List<Player> Load()
+        public List<Bet> Load()
         {
-            List<Player> playerList;
+            List<Bet> playerList;
             try
             {
-                playerList = _context.Set<Player>().ToList();
+                playerList = _context.Set<Bet>().ToList();
             }
             catch (Exception)
             {
@@ -34,56 +34,57 @@ namespace RoosterLottery.Services
         }
 
         /// <summary>
-        /// BetById
+        /// GetById
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Player GetById(int id)
+        public Bet GetById(int id)
         {
-            Models.Player player;
+            Models.Bet bet;
             try
             {
-                player = _context.Find<Player>(id);
+                bet = _context.Find<Bet>(id);
             }
             catch (Exception)
             {
                 throw;
             }
-            return player;
+            return bet;
         }
 
         /// <summary>
-        /// Method to search for a player by phone number
+        /// GetByPlayerId
         /// </summary>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public Player SearchPlayerByPhoneNumber(string phoneNumber)
+        public List<Bet> GetByPlayerId(int playerId)
         {
-            return _context.Set<Player>()?.ToList()?.FirstOrDefault(p => p.Phone.ToLower().Equals(phoneNumber.ToLower()));
+            return _context.Set<Bet>()?.ToList()?.Where(x => x.PlayerId == playerId)?.ToList();
         }
-
         /// <summary>
-        /// Add edit playerModel
+        /// Add edit model
         /// </summary>
-        /// <param name="playerModel"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        public ResponseModel Save(Player model)
+        public ResponseModel Save(Bet model)
         {
             ResponseModel response = new();
             try
             {
-                Player _temp = GetById(model.Id);
+                Bet _temp = GetById(model.Id);
                 if (_temp != null)
                 {
-                    _temp.FullName = model.FullName;
-                    _temp.DoB = model.DoB;
-                    _context.Update<Player>(_temp);
-                    response.Messsage = "Player Update Successfully";
+                    _temp.PlayerId = model.PlayerId;
+                    _temp.SlotId = model.SlotId;
+                    _temp.Value = model.Value;
+                    _temp.IsWin = model.IsWin;
+                    _context.Update<Bet>(_temp);
+                    response.Messsage = "Bet Update Successfully";
                 }
                 else
                 {
-                    _context.Add<Player>(model);
-                    response.Messsage = "Player Inserted Successfully";
+                    _context.Add<Bet>(model);
+                    response.Messsage = "Bet Inserted Successfully";
                 }
                 _context.SaveChanges();
                 response.IsSuccess = true;
@@ -97,27 +98,27 @@ namespace RoosterLottery.Services
         }
 
         /// <summary>
-        /// Delete player by id
+        /// Delete
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public ResponseModel Delete(int id)
         {
-            ResponseModel model = new ResponseModel();
+            ResponseModel model = new();
             try
             {
-                Player _temp = GetById(id);
+                Bet _temp = GetById(id);
                 if (_temp != null)
                 {
-                    _context.Remove<Player>(_temp);
+                    _context.Remove<Bet>(_temp);
                     _context.SaveChanges();
                     model.IsSuccess = true;
-                    model.Messsage = "Player Deleted Successfully";
+                    model.Messsage = "Bet Deleted Successfully";
                 }
                 else
                 {
                     model.IsSuccess = false;
-                    model.Messsage = "Player Not Found";
+                    model.Messsage = "Bet Not Found";
                 }
             }
             catch (Exception ex)

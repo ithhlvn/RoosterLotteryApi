@@ -5,85 +5,75 @@ using System.Linq;
 using RoosterLottery.ViewModels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Player = RoosterLottery.Models.Player;
+using Slot = RoosterLottery.Models.Slot;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace RoosterLottery.Services
 {
-    public class PlayerService : IPlayerService
+    public class SlotService : ISlotService
     {
         private RoosterLotteryContext _context;
-        public PlayerService(RoosterLotteryContext context) => _context = context;
+        public SlotService(RoosterLotteryContext context) => _context = context;
 
         /// <summary>
-        /// Load
+        /// GetPlayerList
         /// </summary>
         /// <returns></returns>
-        public List<Player> Load()
+        public List<Slot> Load()
         {
-            List<Player> playerList;
+            List<Slot> slots;
             try
             {
-                playerList = _context.Set<Player>().ToList();
+                slots = _context.Set<Slot>().ToList();
             }
             catch (Exception)
             {
                 throw;
             }
-            return playerList;
+            return slots;
         }
 
         /// <summary>
-        /// BetById
+        /// GetById
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Player GetById(int id)
+        public Slot GetById(int id)
         {
-            Models.Player player;
+            Models.Slot slot;
             try
             {
-                player = _context.Find<Player>(id);
+                slot = _context.Find<Slot>(id);
             }
             catch (Exception)
             {
                 throw;
             }
-            return player;
-        }
-
-        /// <summary>
-        /// Method to search for a player by phone number
-        /// </summary>
-        /// <param name="phoneNumber"></param>
-        /// <returns></returns>
-        public Player SearchPlayerByPhoneNumber(string phoneNumber)
-        {
-            return _context.Set<Player>()?.ToList()?.FirstOrDefault(p => p.Phone.ToLower().Equals(phoneNumber.ToLower()));
+            return slot;
         }
 
         /// <summary>
         /// Add edit playerModel
         /// </summary>
-        /// <param name="playerModel"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        public ResponseModel Save(Player model)
+        public ResponseModel Save(Slot model)
         {
             ResponseModel response = new();
             try
             {
-                Player _temp = GetById(model.Id);
+                Slot _temp = GetById(model.Id);
                 if (_temp != null)
                 {
-                    _temp.FullName = model.FullName;
-                    _temp.DoB = model.DoB;
-                    _context.Update<Player>(_temp);
-                    response.Messsage = "Player Update Successfully";
+                    _temp.FrTime = model.FrTime;
+                    _temp.ToTime = model.ToTime;
+                    _context.Update<Slot>(_temp);
+                    response.Messsage = "Slot Update Successfully";
                 }
                 else
                 {
-                    _context.Add<Player>(model);
-                    response.Messsage = "Player Inserted Successfully";
+                    _context.Add<Slot>(model);
+                    response.Messsage = "Slot Inserted Successfully";
                 }
                 _context.SaveChanges();
                 response.IsSuccess = true;
@@ -106,18 +96,18 @@ namespace RoosterLottery.Services
             ResponseModel model = new ResponseModel();
             try
             {
-                Player _temp = GetById(id);
+                Slot _temp = GetById(id);
                 if (_temp != null)
                 {
-                    _context.Remove<Player>(_temp);
+                    _context.Remove<Slot>(_temp);
                     _context.SaveChanges();
                     model.IsSuccess = true;
-                    model.Messsage = "Player Deleted Successfully";
+                    model.Messsage = "Slot Deleted Successfully";
                 }
                 else
                 {
                     model.IsSuccess = false;
-                    model.Messsage = "Player Not Found";
+                    model.Messsage = "Slot Not Found";
                 }
             }
             catch (Exception ex)

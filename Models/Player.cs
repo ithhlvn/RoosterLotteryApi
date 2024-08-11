@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RoosterLottery.Models
 {
@@ -10,9 +7,20 @@ namespace RoosterLottery.Models
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(255)]
+        
+        [Required]
+        [StringLength(256, MinimumLength = 2)]
         public string FullName { get; set; }
-        public DateTime? DoB { get; set; }
+
+        //[Required]
+        //public Gender Gender { get; set; }
+
+        [Required]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DoB { get; set; }
+        
+        [Required]
+        [StringLength(11, MinimumLength =10)]
         public string Phone { get; set; }
     }
 }
