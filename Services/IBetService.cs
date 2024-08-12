@@ -10,6 +10,13 @@ namespace RoosterLottery.Services
     public interface IBetService
     {
         /// <summary>
+        /// Lottery
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        bool Lottery(byte value);
+
+        /// <summary>
         /// Load
         /// </summary>
         /// <returns></returns>

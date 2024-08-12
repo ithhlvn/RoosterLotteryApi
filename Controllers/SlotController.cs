@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace RoosterLottery.Controllers
 {
-
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class SlotController : ControllerBase

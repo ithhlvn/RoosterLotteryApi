@@ -16,6 +16,19 @@ namespace RoosterLottery.Services
         public BetService(RoosterLotteryContext context) => _context = context;
 
         /// <summary>
+        /// Lottery
+        /// </summary>
+        /// <param name="slot"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool Lottery(byte value)
+        {
+            Random random = new();
+            int randomNumber = random.Next(0, 9); // Generates a number between 0 (inclusive) and 10 (exclusive)
+            return value == randomNumber;
+        }
+
+        /// <summary>
         /// Load
         /// </summary>
         /// <returns></returns>
@@ -61,6 +74,7 @@ namespace RoosterLottery.Services
         {
             return _context.Set<Bet>()?.ToList()?.Where(x => x.PlayerId == playerId)?.ToList();
         }
+
         /// <summary>
         /// Add edit model
         /// </summary>
