@@ -1,8 +1,8 @@
-# RoosterLotteryApi
+RoosterLotteryApi
 
-# To Create Database
+# Step 1: Create Database
 ## Using Package Manager Console
 - Add-Migration AddPlayer
 - Update-Database
-# To Create Start Backend
+# Step 2: Start Backend Api
 ## Url: localhost:3999
