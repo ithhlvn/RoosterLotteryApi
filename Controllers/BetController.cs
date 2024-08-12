@@ -11,13 +11,31 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace RoosterLottery.Controllers
 {
-
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class BetController : ControllerBase
     {
         IBetService _service;
         public BetController(IBetService service) => _service = service;
+
+        /// <summary>
+        /// GetById
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Lottery(byte value)
+        {
+            try
+            {
+                return Ok(_service.Lottery(value));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         /// <summary>
         /// Load

@@ -28,18 +28,16 @@ namespace RoosterLottery
         {
             services.AddControllers();
 
-            /* Cors Extension */
-            services.AddCors();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RoosterLotteryApi", Version = "v1" });
             });
 
+            services.AddDbContext<RoosterLotteryContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
-            services.AddDbContext<RoosterLotteryContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
-            
+            services.AddScoped<ISlotService, SlotService>();
             services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IBetService, BetService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
