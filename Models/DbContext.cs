@@ -11,8 +11,8 @@ namespace RoosterLottery.Models
         public RoosterLotteryContext(DbContextOptions options) : base(options)
         {
         }
-        DbSet<Slot> Slot { get; set; }
-        DbSet<Player> Player { get; set; }
-        DbSet<Bet> Bet { get; set; }
+        public DbSet<Slot> Slot { get; set; }
+        public DbSet<Player> Player { get; set; }
+        public DbSet<Bet> Bet { get; set; }
     }
 }
